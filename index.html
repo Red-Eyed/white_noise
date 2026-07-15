@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0a0a0a" />
-    <title>Brown Noise</title>
+    <title>Sleep Noise</title>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
@@ -14,17 +14,28 @@
       <div class="controls">
         <label class="control">
           <span class="control__label">Volume</span>
-          <input id="volume" type="range" min="0" max="0.7" step="0.01" value="0.3" />
+          <input id="volume" type="range" min="0" max="0.7" step="0.01" value="0.25" />
+          <span class="control__caption">
+            Keep it in the calm zone — quiet enough to hold a conversation over.
+          </span>
         </label>
 
         <label class="control">
-          <span class="control__label">Darkness</span>
+          <span class="control__label">
+            Color <span class="control__value" id="color-readout">Pink</span>
+          </span>
+          <input id="color" type="range" min="0" max="2" step="0.05" value="1" />
+          <span class="control__scale" aria-hidden="true">
+            <span>White</span>
+            <span>Pink</span>
+            <span>Brown</span>
+          </span>
+          <span class="control__caption">Evidence points to the White–Pink range.</span>
+        </label>
+
+        <label class="control">
+          <span class="control__label">Tone</span>
           <input id="tone" type="range" min="80" max="2000" step="10" value="500" />
-        </label>
-
-        <label class="control">
-          <span class="control__label">Depth</span>
-          <input id="color" type="range" min="0.98" max="0.999" step="0.001" value="0.99" />
         </label>
 
         <label class="control">
@@ -42,6 +53,35 @@
         Keep the device well away from the crib and at a low volume — soft enough that you
         could comfortably hold a quiet conversation nearby.
       </p>
+
+      <details class="evidence">
+        <summary>Why these settings</summary>
+        <div class="evidence__body">
+          <p>
+            <strong>Color.</strong> Broadband white noise is the only spectrum with an infant
+            trial behind it: 80% of newborns fell asleep within five minutes with white noise
+            versus 25% without (Spencer et al., <em>Arch Dis Child</em>). Neonates respond most
+            strongly to broad-spectrum sound (fMEG study). Pink noise's "deeper sleep" evidence
+            is adult-only, and brown noise is not well studied in infants — so the recommended
+            band is White–Pink, and Brown is offered but flagged as less studied.
+          </p>
+          <p>
+            <strong>Volume.</strong> The AAP found some infant sound machines exceed 85 dB — the
+            level at which workplace hearing protection is required — and the effects of loud,
+            long-duration exposure on the developing brain are unknown. This app cannot measure
+            real loudness, so keep the volume quiet enough to talk over and place the device well
+            away from the crib.
+          </p>
+          <p>
+            <strong>Consistency.</strong> The evidence favours consistency over any particular
+            color, so your settings are saved and restored automatically each session.
+          </p>
+          <p class="evidence__sources">
+            Sources: PubMed 2405784 · PMC3876038 · Nature Sci Rep s41598-025-14774-7 ·
+            AAP via Consumer Reports.
+          </p>
+        </div>
+      </details>
     </main>
 
     <script type="module" src="/src/main.ts"></script>

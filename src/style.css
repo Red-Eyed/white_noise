@@ -66,6 +66,24 @@ body {
   font-size: 1.1rem;
 }
 
+.control__value {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.control__scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+.control__caption {
+  font-size: 0.8rem;
+  color: var(--fg-dim);
+  line-height: 1.4;
+}
+
 input[type="range"] {
   width: 100%;
   height: 2.5rem;
@@ -95,4 +113,46 @@ select:focus-visible {
   text-align: center;
   line-height: 1.4;
   margin: 0;
+}
+
+.evidence {
+  width: 100%;
+  font-size: 0.85rem;
+  color: var(--fg-dim);
+  border-top: 1px solid var(--control-bg);
+  padding-top: 1rem;
+}
+
+.evidence > summary {
+  cursor: pointer;
+  color: var(--accent);
+  list-style: none;
+}
+
+.evidence > summary::-webkit-details-marker {
+  display: none;
+}
+
+.evidence > summary::before {
+  content: "▸ ";
+}
+
+.evidence[open] > summary::before {
+  content: "▾ ";
+}
+
+.evidence__body {
+  line-height: 1.5;
+}
+
+.evidence__body p {
+  margin: 0.75rem 0 0;
+}
+
+.evidence__body strong {
+  color: var(--fg);
+}
+
+.evidence__sources {
+  font-size: 0.75rem;
 }

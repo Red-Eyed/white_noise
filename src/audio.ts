@@ -1,6 +1,8 @@
-import { generateBrownNoiseBuffer } from "./noise";
+import { generateColoredNoiseBuffer } from "./noise";
 
-const BUFFER_DURATION_SECONDS = 20;
+// Loop length as a power of two so the FFT-based synthesis stays radix-2.
+// 2^19 ≈ 11.9 s at 44.1 kHz — long enough that the loop is inaudible.
+const BUFFER_SAMPLES = 2 ** 19;
 const PARAM_SMOOTHING_SECONDS = 0.01;
 const FADE_OUT_DURATION_SECONDS = 10;
 
@@ -11,12 +13,12 @@ export class NoiseEngine {
   private source: AudioBufferSourceNode | null = null;
   private filter: BiquadFilterNode | null = null;
   private gain: GainNode | null = null;
-  private leak: number;
+  private alpha: number;
   private fadeOutTimeoutId: number | null = null;
   private starting = false;
 
-  constructor(initialLeak: number) {
-    this.leak = initialLeak;
+  constructor(initialAlpha: number) {
+    this.alpha = initialAlpha;
   }
 
   get isPlaying(): boolean {
@@ -65,6 +67,11 @@ export class NoiseEngine {
     this.filter = null;
     this.gain = null;
 
+    // Release the audio hardware while stopped; start() resumes it. Without
+    // this the AudioContext keeps the audio subsystem clocked, a small idle
+    // drain. (Playback itself loops on the audio thread, not in JS.)
+    void this.context?.suspend();
+
     this.onStop?.();
   }
 
@@ -76,8 +83,8 @@ export class NoiseEngine {
     this.filter?.frequency.setTargetAtTime(toneHz, this.context!.currentTime, PARAM_SMOOTHING_SECONDS);
   }
 
-  setColor(leak: number): void {
-    this.leak = leak;
+  setColor(alpha: number): void {
+    this.alpha = alpha;
     if (!this.isPlaying) return;
 
     const newSource = this.buildSource();
@@ -112,7 +119,7 @@ export class NoiseEngine {
   }
 
   private buildSource(): AudioBufferSourceNode {
-    const buffer = generateBrownNoiseBuffer(this.context!, BUFFER_DURATION_SECONDS, this.leak);
+    const buffer = generateColoredNoiseBuffer(this.context!, BUFFER_SAMPLES, this.alpha);
     const source = this.context!.createBufferSource();
     source.buffer = buffer;
     source.loop = true;
