@@ -12,6 +12,8 @@ const playStopButton = document.getElementById("play-stop") as HTMLButtonElement
 const volumeSlider = document.getElementById("volume") as HTMLInputElement;
 const toneSlider = document.getElementById("tone") as HTMLInputElement;
 const colorSlider = document.getElementById("color") as HTMLInputElement;
+const volumeReadout = document.getElementById("volume-readout") as HTMLSpanElement;
+const toneReadout = document.getElementById("tone-readout") as HTMLSpanElement;
 const colorReadout = document.getElementById("color-readout") as HTMLSpanElement;
 const timerSelect = document.getElementById("timer") as HTMLSelectElement;
 
@@ -37,11 +39,13 @@ playStopButton.addEventListener("click", () => {
 
 volumeSlider.addEventListener("input", () => {
   engine.setVolume(Number(volumeSlider.value));
+  updateVolumeReadout();
   persist();
 });
 
 toneSlider.addEventListener("input", () => {
   engine.setTone(Number(toneSlider.value));
+  updateToneReadout();
   persist();
 });
 
@@ -82,6 +86,8 @@ function applySettingsToControls(saved: Settings): void {
   toneSlider.value = String(saved.toneHz);
   colorSlider.value = String(saved.alpha);
   timerSelect.value = String(saved.timerMinutes);
+  updateVolumeReadout();
+  updateToneReadout();
   updateColorReadout();
 }
 
@@ -94,8 +100,18 @@ function persist(): void {
   });
 }
 
+function updateVolumeReadout(): void {
+  const fraction = Number(volumeSlider.value) / Number(volumeSlider.max);
+  volumeReadout.textContent = `${Math.round(fraction * 100)}%`;
+}
+
+function updateToneReadout(): void {
+  toneReadout.textContent = `${toneSlider.value} Hz`;
+}
+
 function updateColorReadout(): void {
-  colorReadout.textContent = colorName(Number(colorSlider.value));
+  const alpha = Number(colorSlider.value);
+  colorReadout.textContent = `${colorName(alpha)} (α ${alpha.toFixed(1)})`;
 }
 
 function colorName(alpha: number): string {

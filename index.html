@@ -13,7 +13,9 @@
 
       <div class="controls">
         <label class="control">
-          <span class="control__label">Volume</span>
+          <span class="control__label">
+            Volume <span class="control__value" id="volume-readout">36%</span>
+          </span>
           <input id="volume" type="range" min="0" max="0.7" step="0.01" value="0.25" />
           <span class="control__caption">
             Keep it in the calm zone — quiet enough to hold a conversation over.
@@ -22,7 +24,7 @@
 
         <label class="control">
           <span class="control__label">
-            Color <span class="control__value" id="color-readout">Pink</span>
+            Color <span class="control__value" id="color-readout">Pink (α 1.0)</span>
           </span>
           <input id="color" type="range" min="0" max="2" step="0.05" value="1" />
           <span class="control__scale" aria-hidden="true">
@@ -34,7 +36,9 @@
         </label>
 
         <label class="control">
-          <span class="control__label">Tone</span>
+          <span class="control__label">
+            Tone <span class="control__value" id="tone-readout">500 Hz</span>
+          </span>
           <input id="tone" type="range" min="80" max="2000" step="10" value="500" />
         </label>
 
