@@ -9,15 +9,18 @@ const timerSelect = document.getElementById("timer") as HTMLSelectElement;
 const engine = new NoiseEngine(Number(colorSlider.value));
 engine.onStop = () => setPlayingUI(false);
 
-playStopButton.addEventListener("click", async () => {
-  if (engine.isPlaying) {
-    engine.stop();
-    return;
-  }
+if ("mediaSession" in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({ title: "Brown Noise" });
+  navigator.mediaSession.setActionHandler("play", playNoise);
+  navigator.mediaSession.setActionHandler("pause", stopNoise);
+}
 
-  await engine.start(Number(volumeSlider.value), Number(toneSlider.value));
-  setPlayingUI(true);
-  applyTimer();
+playStopButton.addEventListener("click", () => {
+  if (engine.isPlaying) {
+    stopNoise();
+  } else {
+    playNoise();
+  }
 });
 
 volumeSlider.addEventListener("input", () => {
@@ -36,6 +39,16 @@ timerSelect.addEventListener("change", () => {
   if (engine.isPlaying) applyTimer();
 });
 
+async function playNoise(): Promise<void> {
+  await engine.start(Number(volumeSlider.value), Number(toneSlider.value));
+  setPlayingUI(true);
+  applyTimer();
+}
+
+function stopNoise(): void {
+  engine.stop();
+}
+
 function applyTimer(): void {
   const minutes = Number(timerSelect.value);
   if (minutes > 0) {
@@ -48,4 +61,7 @@ function applyTimer(): void {
 function setPlayingUI(isPlaying: boolean): void {
   playStopButton.textContent = isPlaying ? "Stop" : "Play";
   playStopButton.setAttribute("aria-pressed", String(isPlaying));
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
+  }
 }

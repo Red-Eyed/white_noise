@@ -1,3 +1,5 @@
+const LOOP_CROSSFADE_SECONDS = 1;
+
 export function generateBrownNoiseBuffer(
   context: BaseAudioContext,
   durationSeconds: number,
@@ -24,5 +26,18 @@ export function generateBrownNoiseBuffer(
     }
   }
 
+  crossfadeLoopSeam(data, Math.min(length, Math.floor(sampleRate * LOOP_CROSSFADE_SECONDS)));
+
   return buffer;
+}
+
+// Blends the buffer's tail toward its head so a looped AudioBufferSourceNode
+// wraps without an audible click (a hard jump reads as broadband noise/hiss).
+function crossfadeLoopSeam(data: Float32Array, crossfadeSamples: number): void {
+  const tailStart = data.length - crossfadeSamples;
+  for (let i = 0; i < crossfadeSamples; i++) {
+    const fadeIn = i / crossfadeSamples;
+    const fadeOut = 1 - fadeIn;
+    data[tailStart + i] = data[tailStart + i] * fadeOut + data[i] * fadeIn;
+  }
 }
