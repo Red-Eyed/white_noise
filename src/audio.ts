@@ -30,7 +30,11 @@ export class NoiseEngine {
     this.starting = true;
 
     if (!this.context) {
-      this.context = new AudioContext();
+      // "playback" requests a larger output buffer than the default
+      // "interactive". With the screen off, mobile OSes wake the CPU only in
+      // periodic bursts; a small buffer underruns between them and clicks. A
+      // sleep-noise app needs no low latency, so favour a stable large buffer.
+      this.context = new AudioContext({ latencyHint: "playback" });
     }
     if (this.context.state === "suspended") {
       await this.context.resume();
