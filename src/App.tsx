@@ -133,14 +133,14 @@ export function App() {
           <span className="control__caption">
             {activeCaseStudy ? (
               <>
-                Plays the exact noise color from{" "}
+                Uses the noise color from{" "}
                 <a className="text-link" href={activeCaseStudy.citation.url} target="_blank" rel="noopener noreferrer">
                   {activeCaseStudy.citation.label}
                 </a>
-                .
+                . {activeCaseStudy.note}
               </>
             ) : (
-              "Plays the exact noise color used in a published infant- or adult-sleep trial."
+              "Plays the noise color used in a published sleep study."
             )}
           </span>
         </label>
@@ -204,10 +204,12 @@ export function App() {
             broad-spectrum sound (fMEG study), and a 2025 fNIRS study found regular white-noise
             exposure during sleep measurably changes infant brain connectivity. A 2025 systematic
             review across maternal and neonatal care likewise found consistent benefits for
-            sleep onset, stress, and pain. Pink noise's "deeper sleep" evidence is adult-only — it
-            strengthens slow-wave sleep and next-day memory in older adults (Papalambros et al.
-            2017) — and brown noise is not well studied in infants. So the recommended band is
-            White–Pink, and Brown is offered but flagged as less studied.
+            sleep onset, stress, and pain. Pink noise's "deeper sleep" evidence is adult-only, and
+            more specific than a color choice: EEG-timed 50&nbsp;ms pulses of pink noise
+            strengthened slow-wave sleep and next-day memory in older adults (Papalambros et al.
+            2017) — an effect shown for precisely-timed pulses, not continuous playback. Brown
+            noise is not well studied in infants. So the recommended band is White–Pink, and
+            Brown is offered but flagged as less studied.
           </p>
           <p>
             <strong>Volume.</strong> The AAP found some infant sound machines exceed 85 dB — the

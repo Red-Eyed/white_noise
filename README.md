@@ -17,10 +17,12 @@ A browser-based, evidence-based noise generator for soothing babies to sleep.
   and a 2025 systematic review of white noise across maternal and neonatal care found
   consistent benefits for sleep onset, stress, and pain outcomes
   ([PMC12818530](https://pmc.ncbi.nlm.nih.gov/articles/PMC12818530/)). Pink's "deeper sleep"
-  evidence is adult-only — it strengthens slow-wave sleep and next-day memory in older adults
-  (Papalambros et al. 2017, *Frontiers in Human Neuroscience*,
-  [PMC5340797](https://pmc.ncbi.nlm.nih.gov/articles/PMC5340797/)) — and brown is not well
-  studied in infants. So the app defaults to and recommends the **White–Pink** band.
+  evidence is adult-only and more specific than a color choice: EEG-timed 50 ms pulses of pink
+  noise strengthened slow-wave sleep and next-day memory in older adults (Papalambros et al.
+  2017, *Frontiers in Human Neuroscience*,
+  [PMC5340797](https://pmc.ncbi.nlm.nih.gov/articles/PMC5340797/)) — an effect shown for
+  precisely-timed pulses, not continuous playback. Brown is not well studied in infants. So the
+  app defaults to and recommends the **White–Pink** band.
 - **Volume** — the AAP found some infant sound machines exceed 85 dB, the workplace
   hearing-protection threshold, with unknown effects from loud, long-duration exposure
   ([AAP, *Pediatrics* 2014](https://publications.aap.org/pediatrics/article/133/4/677/32749/Infant-Sleep-Machines-and-Hazardous-Sound-Pressure);

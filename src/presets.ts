@@ -14,14 +14,16 @@ export const PRESETS = {
 
 export type PresetName = keyof typeof PRESETS;
 
-// Presets that reproduce the exact noise color used in a published sleep study,
-// rather than a creative sound design. Each is plain, unfiltered, unmodulated
-// noise — fully open EQ, flat tilt, no wave — because that's what the cited
-// study actually played; no attempt is made to replicate any study's playback
-// timing or apparatus beyond the noise color itself.
+// Presets built around the noise *color* used in a published sleep study — not a
+// literal reproduction of its playback. Neither cited paper documents exact
+// playback equipment or frequency response, so the EQ here is the app's own
+// default comfort shaping (matches DEFAULT_PARAMS.highCutHz), not a verified
+// bandwidth. `note` discloses anything else the preset doesn't reproduce (e.g.
+// timing/apparatus), so the UI never implies more fidelity than is real.
 export interface CaseStudyPreset {
   design: SoundDesign;
   citation: { label: string; url: string };
+  note?: string;
 }
 
 export const CASE_STUDY_PRESETS = {
@@ -31,7 +33,7 @@ export const CASE_STUDY_PRESETS = {
       colorB: 0,
       mix: 0,
       lowCutHz: 20,
-      highCutHz: 8000,
+      highCutHz: 500,
       resonanceQ: 0.707,
       tiltDb: 0,
       waveRateHz: 0.1,
@@ -41,14 +43,15 @@ export const CASE_STUDY_PRESETS = {
       label: "Spencer et al. 1990, Arch Dis Child — newborn white-noise sleep-onset trial",
       url: "https://pubmed.ncbi.nlm.nih.gov/2405784/",
     },
+    note: "The paper doesn't document playback equipment or frequency response, so this uses the app's default comfort EQ rather than a verified bandwidth.",
   },
-  "Papalambros 2017": {
+  "Papalambros-inspired": {
     design: {
       colorA: 1,
       colorB: 1,
       mix: 0,
       lowCutHz: 20,
-      highCutHz: 8000,
+      highCutHz: 500,
       resonanceQ: 0.707,
       tiltDb: 0,
       waveRateHz: 0.1,
@@ -58,6 +61,7 @@ export const CASE_STUDY_PRESETS = {
       label: "Papalambros et al. 2017, Front Hum Neurosci — pink-noise deep-sleep/memory trial",
       url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5340797/",
     },
+    note: "The study delivered 50 ms pink-noise pulses precisely timed to slow-wave sleep via real-time EEG, not continuous playback — this preset plays continuous pink noise for convenience, and continuous playback hasn't itself been shown to produce the same memory benefit.",
   },
 } satisfies Record<string, CaseStudyPreset>;
 
