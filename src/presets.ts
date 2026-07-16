@@ -13,3 +13,52 @@ export const PRESETS = {
 } satisfies Record<string, SoundDesign>;
 
 export type PresetName = keyof typeof PRESETS;
+
+// Presets that reproduce the exact noise color used in a published sleep study,
+// rather than a creative sound design. Each is plain, unfiltered, unmodulated
+// noise — fully open EQ, flat tilt, no wave — because that's what the cited
+// study actually played; no attempt is made to replicate any study's playback
+// timing or apparatus beyond the noise color itself.
+export interface CaseStudyPreset {
+  design: SoundDesign;
+  citation: { label: string; url: string };
+}
+
+export const CASE_STUDY_PRESETS = {
+  "Spencer 1990": {
+    design: {
+      colorA: 0,
+      colorB: 0,
+      mix: 0,
+      lowCutHz: 20,
+      highCutHz: 8000,
+      resonanceQ: 0.707,
+      tiltDb: 0,
+      waveRateHz: 0.1,
+      waveDepth: 0,
+    },
+    citation: {
+      label: "Spencer et al. 1990, Arch Dis Child — newborn white-noise sleep-onset trial",
+      url: "https://pubmed.ncbi.nlm.nih.gov/2405784/",
+    },
+  },
+  "Papalambros 2017": {
+    design: {
+      colorA: 1,
+      colorB: 1,
+      mix: 0,
+      lowCutHz: 20,
+      highCutHz: 8000,
+      resonanceQ: 0.707,
+      tiltDb: 0,
+      waveRateHz: 0.1,
+      waveDepth: 0,
+    },
+    citation: {
+      label: "Papalambros et al. 2017, Front Hum Neurosci — pink-noise deep-sleep/memory trial",
+      url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5340797/",
+    },
+  },
+} satisfies Record<string, CaseStudyPreset>;
+
+export type CaseStudyPresetName = keyof typeof CASE_STUDY_PRESETS;

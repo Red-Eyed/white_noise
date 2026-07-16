@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { NoiseEngine } from "./audio";
-import { DEFAULT_PARAMS, type GeneratorParams } from "./params";
-import { PRESETS, type PresetName } from "./presets";
+import { DEFAULT_PARAMS, type GeneratorParams, type SoundDesign } from "./params";
+import { CASE_STUDY_PRESETS, PRESETS, type CaseStudyPresetName, type PresetName } from "./presets";
 import { loadState, saveState } from "./storage";
 import { SLIDER_CONFIGS, type SliderConfig } from "./sliders";
 import { Slider } from "./components/Slider";
 import { Spectrum } from "./components/Spectrum";
 
 const initial = loadState({ params: DEFAULT_PARAMS, advanced: false, preset: null });
-const initialPreset = initial.preset && initial.preset in PRESETS ? initial.preset : null;
+const initialPreset =
+  initial.preset && (initial.preset in PRESETS || initial.preset in CASE_STUDY_PRESETS)
+    ? initial.preset
+    : null;
 
 export function App() {
   const engineRef = useRef<NoiseEngine | null>(null);
@@ -60,16 +63,30 @@ export function App() {
     if (playing) applyTimer(minutes);
   };
 
+  const applyDesign = (design: SoundDesign, name: string) => {
+    const merged: GeneratorParams = { ...params, ...design };
+    engine.applyParams(merged);
+    setParams(merged);
+    setPreset(name);
+  };
+
   const choosePreset = (name: string) => {
     if (!(name in PRESETS)) {
       setPreset(null);
       return;
     }
-    const merged: GeneratorParams = { ...params, ...PRESETS[name as PresetName] };
-    engine.applyParams(merged);
-    setParams(merged);
-    setPreset(name);
+    applyDesign(PRESETS[name as PresetName], name);
   };
+
+  const chooseCaseStudy = (name: string) => {
+    if (!(name in CASE_STUDY_PRESETS)) {
+      setPreset(null);
+      return;
+    }
+    applyDesign(CASE_STUDY_PRESETS[name as CaseStudyPresetName].design, name);
+  };
+
+  const activeCaseStudy = preset && preset in CASE_STUDY_PRESETS ? CASE_STUDY_PRESETS[preset as CaseStudyPresetName] : null;
 
   const resetDefaults = () => {
     engine.applyParams(DEFAULT_PARAMS);
@@ -101,6 +118,33 @@ export function App() {
       </div>
 
       {advanced && <Spectrum engine={engine} active={advanced && playing} />}
+
+      {!advanced && (
+        <label className="control">
+          <span className="control__label">Case study</span>
+          <select value={preset ?? ""} onChange={(event) => chooseCaseStudy(event.target.value)}>
+            <option value="">Custom</option>
+            {Object.keys(CASE_STUDY_PRESETS).map((name) => (
+              <option key={name} value={name}>
+                {name}
+              </option>
+            ))}
+          </select>
+          <span className="control__caption">
+            {activeCaseStudy ? (
+              <>
+                Plays the exact noise color from{" "}
+                <a className="text-link" href={activeCaseStudy.citation.url} target="_blank" rel="noopener noreferrer">
+                  {activeCaseStudy.citation.label}
+                </a>
+                .
+              </>
+            ) : (
+              "Plays the exact noise color used in a published infant- or adult-sleep trial."
+            )}
+          </span>
+        </label>
+      )}
 
       {advanced && (
         <label className="control">
@@ -184,31 +228,32 @@ export function App() {
           </p>
           <p className="evidence__sources">
             Sources:{" "}
-            <a href="https://pubmed.ncbi.nlm.nih.gov/2405784/" target="_blank" rel="noopener noreferrer">
+            <a className="text-link" href="https://pubmed.ncbi.nlm.nih.gov/2405784/" target="_blank" rel="noopener noreferrer">
               Spencer 1990
             </a>{" "}
             ·{" "}
-            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3876038/" target="_blank" rel="noopener noreferrer">
+            <a className="text-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3876038/" target="_blank" rel="noopener noreferrer">
               fMEG study
             </a>{" "}
             ·{" "}
-            <a href="https://www.nature.com/articles/s41598-025-14774-7" target="_blank" rel="noopener noreferrer">
+            <a className="text-link" href="https://www.nature.com/articles/s41598-025-14774-7" target="_blank" rel="noopener noreferrer">
               fNIRS study
             </a>{" "}
             ·{" "}
-            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12818530/" target="_blank" rel="noopener noreferrer">
+            <a className="text-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12818530/" target="_blank" rel="noopener noreferrer">
               2025 review
             </a>{" "}
             ·{" "}
-            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5340797/" target="_blank" rel="noopener noreferrer">
+            <a className="text-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5340797/" target="_blank" rel="noopener noreferrer">
               Papalambros 2017
             </a>{" "}
             ·{" "}
-            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4402657/" target="_blank" rel="noopener noreferrer">
+            <a className="text-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4402657/" target="_blank" rel="noopener noreferrer">
               Mindell bedtime routine
             </a>{" "}
             ·{" "}
             <a
+              className="text-link"
               href="https://publications.aap.org/pediatrics/article/133/4/677/32749/Infant-Sleep-Machines-and-Hazardous-Sound-Pressure"
               target="_blank"
               rel="noopener noreferrer"
@@ -217,6 +262,7 @@ export function App() {
             </a>{" "}
             via{" "}
             <a
+              className="text-link"
               href="https://www.consumerreports.org/babies-kids/bassinets/white-noise-for-babies-its-confusing-a3417127276/"
               target="_blank"
               rel="noopener noreferrer"

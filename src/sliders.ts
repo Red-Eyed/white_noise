@@ -114,7 +114,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   },
   {
     key: "lowCutHz",
-    label: "High-pass",
+    label: "Low cut",
     wikipedia: "https://en.wikipedia.org/wiki/High-pass_filter",
     map: lowCutMap,
     sliderMin: 0,
@@ -128,7 +128,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   },
   {
     key: "highCutHz",
-    label: "Tone",
+    label: "High cut",
     wikipedia: "https://en.wikipedia.org/wiki/Low-pass_filter",
     map: toneMap,
     sliderMin: 0,

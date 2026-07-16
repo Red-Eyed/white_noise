@@ -27,7 +27,7 @@ A browser-based, evidence-based noise generator for soothing babies to sleep.
   [Consumer Reports coverage](https://www.consumerreports.org/babies-kids/bassinets/white-noise-for-babies-its-confusing-a3417127276/)).
   A web app can't measure real loudness, so the default is low and the guidance is to keep it
   quiet enough to talk over, device well away from the crib.
-- **Tone** — a comfort low-pass to tame harsh high-end. Not evidence-claimed; personal taste.
+- **High cut** — a comfort low-pass to tame harsh high-end. Not evidence-claimed; personal taste.
 - **Auto-off** — fades out after a set time to limit total exposure.
 - **Consistency** — settings are saved and restored each session, because a consistent
   bedtime routine (not any particular color) is what's linked to better infant sleep outcomes
