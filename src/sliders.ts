@@ -82,7 +82,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   },
   {
     key: "colorB",
-    label: "Air layer",
+    label: "Layer B color",
     map: linear,
     sliderMin: PARAM_RANGES.colorB.min,
     sliderMax: PARAM_RANGES.colorB.max,
@@ -95,7 +95,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   },
   {
     key: "mix",
-    label: "Layer mix",
+    label: "Layer mix (A↔B)",
     map: linear,
     sliderMin: PARAM_RANGES.mix.min,
     sliderMax: PARAM_RANGES.mix.max,
@@ -104,11 +104,11 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     live: true,
     advancedOnly: true,
     apply: (engine, v) => engine.setMix(v),
-    scale: ["Color", "Air layer"],
+    scale: ["Layer A", "Layer B"],
   },
   {
     key: "lowCutHz",
-    label: "Low-cut",
+    label: "High-pass",
     map: lowCutMap,
     sliderMin: 0,
     sliderMax: 1,
@@ -117,7 +117,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     live: true,
     advancedOnly: true,
     apply: (engine, v) => engine.setLowCut(v),
-    caption: "Rolls off rumble below the corner.",
+    caption: "Rolls off rumble below the cutoff.",
   },
   {
     key: "highCutHz",
@@ -134,7 +134,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   },
   {
     key: "tiltDb",
-    label: "Tilt",
+    label: "Spectral tilt",
     map: linear,
     sliderMin: PARAM_RANGES.tiltDb.min,
     sliderMax: PARAM_RANGES.tiltDb.max,
@@ -147,7 +147,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   },
   {
     key: "waveRateHz",
-    label: "Waves",
+    label: "Modulation rate",
     map: linear,
     sliderMin: PARAM_RANGES.waveRateHz.min,
     sliderMax: PARAM_RANGES.waveRateHz.max,
@@ -156,11 +156,11 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     live: true,
     advancedOnly: true,
     apply: (engine, v) => engine.setWaveRate(v),
-    caption: "Speed of the slow volume swell.",
+    caption: "Rate of the slow amplitude modulation.",
   },
   {
     key: "waveDepth",
-    label: "Wave depth",
+    label: "Modulation depth",
     map: linear,
     sliderMin: PARAM_RANGES.waveDepth.min,
     sliderMax: PARAM_RANGES.waveDepth.max,
@@ -169,6 +169,6 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     live: true,
     advancedOnly: true,
     apply: (engine, v) => engine.setWaveDepth(v),
-    caption: "How deep each swell dips — 0 is steady.",
+    caption: "Depth of the amplitude modulation — 0 is steady.",
   },
 ];

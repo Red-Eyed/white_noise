@@ -173,7 +173,7 @@ export function App() {
             so your settings are saved and restored automatically each session.
           </p>
           <p>
-            <strong>Advanced controls.</strong> The Advanced panel (EQ, layer mix, waves, presets) is for
+            <strong>Advanced controls.</strong> The Advanced panel (EQ, layer mix, modulation, presets) is for
             exploring — the science above still points to a quiet, steady, White–Pink sound.
           </p>
           <p className="evidence__sources">
