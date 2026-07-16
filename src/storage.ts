@@ -1,39 +1,63 @@
-// Persists control settings so every session is identical. The infant evidence
-// favours consistency over any particular spectral color, so restoring the same
-// setup each night is itself the feature — not a convenience.
+// Persists the full control state so every session is identical. The infant
+// evidence favours consistency over any particular spectral color, so restoring
+// the same setup each night is itself the feature — not a convenience.
 
-export interface Settings {
-  volume: number;
-  toneHz: number;
-  alpha: number;
-  timerMinutes: number;
+import { PARAM_RANGES, type GeneratorParams, type Range } from "./params";
+
+export interface PersistedState {
+  params: GeneratorParams;
+  pro: boolean; // whether the advanced panel is open
+  preset: string | null; // the active preset name, or null when custom
 }
 
 const STORAGE_KEY = "sleep-noise-settings";
 
-export function loadSettings(defaults: Settings): Settings {
+export function loadState(defaults: PersistedState): PersistedState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return defaults;
 
-    const parsed = JSON.parse(raw) as Partial<Record<keyof Settings, unknown>>;
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
     return {
-      volume: numberOr(parsed.volume, defaults.volume),
-      toneHz: numberOr(parsed.toneHz, defaults.toneHz),
-      alpha: numberOr(parsed.alpha, defaults.alpha),
-      timerMinutes: numberOr(parsed.timerMinutes, defaults.timerMinutes),
+      params: coerceParams(parsed, defaults.params),
+      pro: typeof parsed.pro === "boolean" ? parsed.pro : defaults.pro,
+      preset: typeof parsed.preset === "string" ? parsed.preset : defaults.preset,
     };
   } catch {
     return defaults;
   }
 }
 
-export function saveSettings(settings: Settings): void {
+export function saveState(state: PersistedState): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    const flat = { ...state.params, pro: state.pro, preset: state.preset };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(flat));
   } catch {
     // Persistence is best-effort; ignore quota / private-mode errors.
   }
+}
+
+// Coerce each field into range, falling back to the default. `?? old` handles
+// migration from the original schema (toneHz → highCutHz, alpha → colorA).
+function coerceParams(raw: Record<string, unknown>, defaults: GeneratorParams): GeneratorParams {
+  return {
+    volume: clamp(raw.volume, PARAM_RANGES.volume, defaults.volume),
+    colorA: clamp(raw.colorA ?? raw.alpha, PARAM_RANGES.colorA, defaults.colorA),
+    colorB: clamp(raw.colorB, PARAM_RANGES.colorB, defaults.colorB),
+    mix: clamp(raw.mix, PARAM_RANGES.mix, defaults.mix),
+    lowCutHz: clamp(raw.lowCutHz, PARAM_RANGES.lowCutHz, defaults.lowCutHz),
+    highCutHz: clamp(raw.highCutHz ?? raw.toneHz, PARAM_RANGES.highCutHz, defaults.highCutHz),
+    resonanceQ: clamp(raw.resonanceQ, PARAM_RANGES.resonanceQ, defaults.resonanceQ),
+    tiltDb: clamp(raw.tiltDb, PARAM_RANGES.tiltDb, defaults.tiltDb),
+    waveRateHz: clamp(raw.waveRateHz, PARAM_RANGES.waveRateHz, defaults.waveRateHz),
+    waveDepth: clamp(raw.waveDepth, PARAM_RANGES.waveDepth, defaults.waveDepth),
+    timerMinutes: numberOr(raw.timerMinutes, defaults.timerMinutes),
+  };
+}
+
+function clamp(value: unknown, range: Range, fallback: number): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
+  return Math.min(range.max, Math.max(range.min, value));
 }
 
 function numberOr(value: unknown, fallback: number): number {

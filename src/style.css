@@ -18,14 +18,18 @@ body {
   color: var(--fg);
   font-family: system-ui, -apple-system, sans-serif;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center; /* horizontal centering */
   padding: 1.5rem;
 }
 
 .app {
   width: 100%;
   max-width: 28rem;
+  /* auto margins center the column vertically when it fits, but collapse when
+     it's taller than the viewport so the top stays reachable and sticky works
+     (unlike justify-content: center, which clips the overflow). */
+  margin-block: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -155,4 +159,56 @@ select:focus-visible {
 
 .evidence__sources {
   font-size: 0.75rem;
+}
+
+/* Simple ↔ Pro mode */
+.mode-toggle {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--control-bg);
+  border-radius: 0.6rem;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.45rem;
+  background: transparent;
+  color: var(--fg-dim);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mode-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.mode-btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Live spectrum — audioMotion-analyzer draws a canvas that fills this box.
+   Pinned to the top of the viewport so it stays visible while scrolling the
+   Pro controls. The opaque background + shadow hide content passing under it. */
+.spectrum {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  height: 128px;
+  background: var(--control-bg);
+  border-radius: 0.6rem;
+  overflow: hidden;
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.7);
+}
+
+/* The preset picker sits directly in .app (not inside .controls), so give
+   standalone controls the full column width. */
+.app > .control {
+  width: 100%;
 }
