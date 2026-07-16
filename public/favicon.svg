@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Sleep Noise">
+  <defs>
+    <mask id="crescent">
+      <rect width="512" height="512" fill="black" />
+      <circle cx="230" cy="256" r="130" fill="white" />
+      <circle cx="292" cy="218" r="120" fill="black" />
+    </mask>
+  </defs>
+  <rect width="512" height="512" fill="#0a0a0a" />
+  <g fill="none" stroke="#b8823c" stroke-width="15" stroke-linecap="round">
+    <path d="M350 145 A150 150 0 0 1 350 367" opacity="0.9" />
+    <path d="M374 119 A185 185 0 0 1 374 393" opacity="0.55" />
+    <path d="M397 92 A220 220 0 0 1 397 420" opacity="0.3" />
+  </g>
+  <rect width="512" height="512" fill="#b8823c" mask="url(#crescent)" />
+</svg>
