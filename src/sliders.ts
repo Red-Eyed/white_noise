@@ -50,12 +50,15 @@ export interface SliderConfig {
   apply: (engine: NoiseEngine, value: number) => void;
   caption?: string;
   scale?: string[];
+  // Optional link to the Wikipedia article for this control's underlying concept.
+  wikipedia?: string;
 }
 
 export const SLIDER_CONFIGS: SliderConfig[] = [
   {
     key: "volume",
     label: "Volume",
+    wikipedia: "https://en.wikipedia.org/wiki/Loudness",
     map: linear,
     sliderMin: PARAM_RANGES.volume.min,
     sliderMax: PARAM_RANGES.volume.max,
@@ -69,6 +72,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   {
     key: "colorA",
     label: "Color",
+    wikipedia: "https://en.wikipedia.org/wiki/Colors_of_noise",
     map: linear,
     sliderMin: PARAM_RANGES.colorA.min,
     sliderMax: PARAM_RANGES.colorA.max,
@@ -83,6 +87,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   {
     key: "colorB",
     label: "Layer B color",
+    wikipedia: "https://en.wikipedia.org/wiki/Colors_of_noise",
     map: linear,
     sliderMin: PARAM_RANGES.colorB.min,
     sliderMax: PARAM_RANGES.colorB.max,
@@ -96,6 +101,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   {
     key: "mix",
     label: "Layer mix (A↔B)",
+    wikipedia: "https://en.wikipedia.org/wiki/Fade_(audio_engineering)",
     map: linear,
     sliderMin: PARAM_RANGES.mix.min,
     sliderMax: PARAM_RANGES.mix.max,
@@ -109,6 +115,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   {
     key: "lowCutHz",
     label: "High-pass",
+    wikipedia: "https://en.wikipedia.org/wiki/High-pass_filter",
     map: lowCutMap,
     sliderMin: 0,
     sliderMax: 1,
@@ -122,6 +129,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   {
     key: "highCutHz",
     label: "Tone",
+    wikipedia: "https://en.wikipedia.org/wiki/Low-pass_filter",
     map: toneMap,
     sliderMin: 0,
     sliderMax: 1,
@@ -135,6 +143,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   {
     key: "tiltDb",
     label: "Spectral tilt",
+    wikipedia: "https://en.wikipedia.org/wiki/Equalization_(audio)",
     map: linear,
     sliderMin: PARAM_RANGES.tiltDb.min,
     sliderMax: PARAM_RANGES.tiltDb.max,
@@ -148,6 +157,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   {
     key: "waveRateHz",
     label: "Modulation rate",
+    wikipedia: "https://en.wikipedia.org/wiki/Amplitude_modulation",
     map: linear,
     sliderMin: PARAM_RANGES.waveRateHz.min,
     sliderMax: PARAM_RANGES.waveRateHz.max,
@@ -161,6 +171,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
   {
     key: "waveDepth",
     label: "Modulation depth",
+    wikipedia: "https://en.wikipedia.org/wiki/Amplitude_modulation",
     map: linear,
     sliderMin: PARAM_RANGES.waveDepth.min,
     sliderMax: PARAM_RANGES.waveDepth.max,

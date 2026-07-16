@@ -12,7 +12,8 @@ interface Props {
 // (colors, which rebuild a buffer) update the readout live but only commit to the
 // engine on release, read straight off the input so the value is never stale.
 export function Slider({ config, value, onInput, onCommit }: Props) {
-  const { map, sliderMin, sliderMax, sliderStep, format, live, label, caption, scale } = config;
+  const { map, sliderMin, sliderMax, sliderStep, format, live, label, caption, scale, wikipedia } =
+    config;
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     const next = map.toValue(Number(event.target.value));
@@ -28,7 +29,20 @@ export function Slider({ config, value, onInput, onCommit }: Props) {
   return (
     <label className="control">
       <span className="control__label">
-        {label} <span className="control__value">{format(value)}</span>
+        <span>
+          {label} <span className="control__value">{format(value)}</span>
+        </span>
+        {wikipedia && (
+          <a
+            className="control__wiki"
+            href={wikipedia}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${label} on Wikipedia`}
+          >
+            Wikipedia&nbsp;↗
+          </a>
+        )}
       </span>
       <input
         type="range"
