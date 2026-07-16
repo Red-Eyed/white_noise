@@ -47,7 +47,7 @@ export interface SliderConfig {
   // `live` sliders are cheap param ramps and commit on every input tick; non-live
   // ones (the colors) rebuild a noise buffer, so they only commit on release.
   live: boolean;
-  proOnly: boolean;
+  advancedOnly: boolean;
   apply: (engine: NoiseEngine, value: number) => void;
   caption?: string;
   scale?: string[];
@@ -63,7 +63,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.01,
     format: formatVolume,
     live: true,
-    proOnly: false,
+    advancedOnly: false,
     apply: (engine, v) => engine.setVolume(v),
     caption: "Keep it in the calm zone — quiet enough to hold a conversation over.",
   },
@@ -76,7 +76,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.05,
     format: formatColor,
     live: false,
-    proOnly: false,
+    advancedOnly: false,
     apply: (engine, v) => engine.setColorA(v),
     scale: ["White", "Pink", "Brown"],
     caption: "Evidence points to the White–Pink range.",
@@ -90,7 +90,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.05,
     format: formatColor,
     live: false,
-    proOnly: true,
+    advancedOnly: true,
     apply: (engine, v) => engine.setColorB(v),
     caption: "A second noise color, blended in by the mix below.",
   },
@@ -103,7 +103,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.01,
     format: formatMix,
     live: true,
-    proOnly: true,
+    advancedOnly: true,
     apply: (engine, v) => engine.setMix(v),
     scale: ["Color", "Air layer"],
   },
@@ -116,7 +116,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.005,
     format: formatHz,
     live: true,
-    proOnly: true,
+    advancedOnly: true,
     apply: (engine, v) => engine.setLowCut(v),
     caption: "Rolls off rumble below the corner.",
   },
@@ -129,7 +129,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.005,
     format: formatHz,
     live: true,
-    proOnly: false,
+    advancedOnly: false,
     apply: (engine, v) => engine.setHighCut(v),
     caption: "High-cut ceiling — lower is warmer, higher is brighter.",
   },
@@ -142,7 +142,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.05,
     format: formatQ,
     live: true,
-    proOnly: true,
+    advancedOnly: true,
     apply: (engine, v) => engine.setResonance(v),
     caption: "Emphasis right at the Tone corner.",
   },
@@ -155,7 +155,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.5,
     format: formatTilt,
     live: true,
-    proOnly: true,
+    advancedOnly: true,
     apply: (engine, v) => engine.setTilt(v),
     scale: ["Darker", "Brighter"],
   },
@@ -168,7 +168,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.01,
     format: formatWaveRate,
     live: true,
-    proOnly: true,
+    advancedOnly: true,
     apply: (engine, v) => engine.setWaveRate(v),
     caption: "Speed of the slow volume swell.",
   },
@@ -181,7 +181,7 @@ export const SLIDER_CONFIGS: SliderConfig[] = [
     sliderStep: 0.01,
     format: formatWaveDepth,
     live: true,
-    proOnly: true,
+    advancedOnly: true,
     apply: (engine, v) => engine.setWaveDepth(v),
     caption: "How deep each swell dips — 0 is steady.",
   },

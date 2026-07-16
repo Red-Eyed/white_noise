@@ -6,7 +6,7 @@ import { PARAM_RANGES, type GeneratorParams, type Range } from "./params";
 
 export interface PersistedState {
   params: GeneratorParams;
-  pro: boolean; // whether the advanced panel is open
+  advanced: boolean; // whether the advanced panel is open
   preset: string | null; // the active preset name, or null when custom
 }
 
@@ -20,7 +20,8 @@ export function loadState(defaults: PersistedState): PersistedState {
     const parsed = JSON.parse(raw) as Record<string, unknown>;
     return {
       params: coerceParams(parsed, defaults.params),
-      pro: typeof parsed.pro === "boolean" ? parsed.pro : defaults.pro,
+      // `?? parsed.pro` migrates the old key name (before Pro was renamed Advanced).
+      advanced: boolOr(parsed.advanced ?? parsed.pro, defaults.advanced),
       preset: typeof parsed.preset === "string" ? parsed.preset : defaults.preset,
     };
   } catch {
@@ -30,7 +31,7 @@ export function loadState(defaults: PersistedState): PersistedState {
 
 export function saveState(state: PersistedState): void {
   try {
-    const flat = { ...state.params, pro: state.pro, preset: state.preset };
+    const flat = { ...state.params, advanced: state.advanced, preset: state.preset };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(flat));
   } catch {
     // Persistence is best-effort; ignore quota / private-mode errors.
@@ -62,4 +63,8 @@ function clamp(value: unknown, range: Range, fallback: number): number {
 
 function numberOr(value: unknown, fallback: number): number {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+}
+
+function boolOr(value: unknown, fallback: boolean): boolean {
+  return typeof value === "boolean" ? value : fallback;
 }

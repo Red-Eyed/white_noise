@@ -13,8 +13,8 @@ https://red-eyed.github.io/white_noise/. No backend. Runtime dependencies:
   on top of the library).
 - **`tone`** (Tone.js) — the audio engine: `CrossFade`, `Filter`, `EQ3`, `Tremolo`, `Gain`,
   and `AudioContext` lifecycle. Prefer Tone nodes over raw Web Audio wiring.
-- **`react` / `react-dom`** — the view layer (a "Simple" default screen and an advanced
-  "Pro" panel).
+- **`react` / `react-dom`** — the view layer (a "Simple" default screen and an
+  "Advanced" panel).
 - **`audiomotion-analyzer`** — the live spectrum visualizer. Don't hand-roll spectrum
   drawing; configure this library.
 
@@ -69,21 +69,21 @@ swapped again without touching audio. Read them in this order:
 4. **[src/presets.ts](src/presets.ts)** — named presets as pure data (`SoundDesign` only;
    volume/timer are personal and untouched). Adding one is a data change, no logic.
 
-5. **[src/storage.ts](src/storage.ts)** — localStorage load/save of the full params + `pro`
+5. **[src/storage.ts](src/storage.ts)** — localStorage load/save of the full params + `advanced`
    flag + active `preset`, defensively clamped, with migration from the old schema
-   (`toneHz→highCutHz`, `alpha→colorA`). Restoring the same setup each session is a
-   deliberate feature (see "Evidence").
+   (`toneHz→highCutHz`, `alpha→colorA`, `pro→advanced`). Restoring the same setup each session
+   is a deliberate feature (see "Evidence").
 
 **View (React):**
 
 6. **[src/format.ts](src/format.ts)** — pure readout formatters + `colorName`.
 
 7. **[src/sliders.ts](src/sliders.ts)** — `SLIDER_CONFIGS`, the declarative descriptor list
-   (param key, log/linear `SliderMap`, format, live/proOnly, engine setter). The view renders
+   (param key, log/linear `SliderMap`, format, live/advancedOnly, engine setter). The view renders
    straight from this — adding a control is a data change here, not new JSX.
 
 8. **[src/App.tsx](src/App.tsx)** — the one stateful component: holds the engine in a ref,
-   `params`/`pro`/`preset`/`playing` in state, wires the transport, presets, and mode toggle,
+   `params`/`advanced`/`preset`/`playing` in state, wires the transport, presets, and mode toggle,
    and renders from `SLIDER_CONFIGS`. **[src/components/Slider.tsx](src/components/Slider.tsx)**
    is a controlled range slider; **[src/components/Spectrum.tsx](src/components/Spectrum.tsx)**
    mounts audioMotion-analyzer onto the engine's analyser tap.

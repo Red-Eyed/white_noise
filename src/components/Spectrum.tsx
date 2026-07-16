@@ -4,7 +4,7 @@ import type { NoiseEngine } from "../audio";
 
 interface Props {
   engine: NoiseEngine;
-  active: boolean; // Pro mode + playing — only then is there a signal to analyse
+  active: boolean; // Advanced mode + playing — only then is there a signal to analyse
 }
 
 // The live spectrum, rendered by audioMotion-analyzer. It reuses the engine's

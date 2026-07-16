@@ -7,7 +7,7 @@ import { SLIDER_CONFIGS, type SliderConfig } from "./sliders";
 import { Slider } from "./components/Slider";
 import { Spectrum } from "./components/Spectrum";
 
-const initial = loadState({ params: DEFAULT_PARAMS, pro: false, preset: null });
+const initial = loadState({ params: DEFAULT_PARAMS, advanced: false, preset: null });
 const initialPreset = initial.preset && initial.preset in PRESETS ? initial.preset : null;
 
 export function App() {
@@ -16,7 +16,7 @@ export function App() {
   const engine = engineRef.current;
 
   const [params, setParams] = useState<GeneratorParams>(initial.params);
-  const [pro, setPro] = useState(initial.pro);
+  const [advanced, setAdvanced] = useState(initial.advanced);
   const [preset, setPreset] = useState<string | null>(initialPreset);
   const [playing, setPlaying] = useState(false);
 
@@ -26,9 +26,9 @@ export function App() {
 
   // Persist the full state, debounced so a slider drag isn't 60 writes/second.
   useEffect(() => {
-    const id = window.setTimeout(() => saveState({ params, pro, preset }), 150);
+    const id = window.setTimeout(() => saveState({ params, advanced, preset }), 150);
     return () => window.clearTimeout(id);
-  }, [params, pro, preset]);
+  }, [params, advanced, preset]);
 
   const applyTimer = (minutes: number) => {
     if (minutes > 0) engine.scheduleFadeOut(minutes);
@@ -71,10 +71,10 @@ export function App() {
     setPreset(name);
   };
 
-  const visibleSliders = SLIDER_CONFIGS.filter((config) => pro || !config.proOnly);
+  const visibleSliders = SLIDER_CONFIGS.filter((config) => advanced || !config.advancedOnly);
 
   return (
-    <main className={pro ? "app pro" : "app"}>
+    <main className={advanced ? "app advanced" : "app"}>
       <button
         className="play-stop"
         type="button"
@@ -85,17 +85,17 @@ export function App() {
       </button>
 
       <div className="mode-toggle" role="group" aria-label="Control mode">
-        <button type="button" className="mode-btn" aria-pressed={!pro} onClick={() => setPro(false)}>
+        <button type="button" className="mode-btn" aria-pressed={!advanced} onClick={() => setAdvanced(false)}>
           Simple
         </button>
-        <button type="button" className="mode-btn" aria-pressed={pro} onClick={() => setPro(true)}>
-          Pro
+        <button type="button" className="mode-btn" aria-pressed={advanced} onClick={() => setAdvanced(true)}>
+          Advanced
         </button>
       </div>
 
-      {pro && <Spectrum engine={engine} active={pro && playing} />}
+      {advanced && <Spectrum engine={engine} active={advanced && playing} />}
 
-      {pro && (
+      {advanced && (
         <label className="control">
           <span className="control__label">Preset</span>
           <select value={preset ?? ""} onChange={(event) => choosePreset(event.target.value)}>
@@ -162,7 +162,7 @@ export function App() {
             so your settings are saved and restored automatically each session.
           </p>
           <p>
-            <strong>Advanced controls.</strong> The Pro panel (EQ, layer mix, waves, presets) is for
+            <strong>Advanced controls.</strong> The Advanced panel (EQ, layer mix, waves, presets) is for
             exploring — the science above still points to a quiet, steady, White–Pink sound.
           </p>
           <p className="evidence__sources">
