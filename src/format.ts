@@ -27,10 +27,6 @@ export function formatHz(hz: number): string {
   return `${Math.round(hz)} Hz`;
 }
 
-export function formatQ(q: number): string {
-  return `Q ${q.toFixed(2)}`;
-}
-
 export function formatTilt(db: number): string {
   return `${db > 0 ? "+" : ""}${db.toFixed(1)} dB`;
 }
