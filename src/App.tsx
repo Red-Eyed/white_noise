@@ -71,6 +71,13 @@ export function App() {
     setPreset(name);
   };
 
+  const resetDefaults = () => {
+    engine.applyParams(DEFAULT_PARAMS);
+    setParams(DEFAULT_PARAMS);
+    setPreset(null);
+    if (playing) applyTimer(DEFAULT_PARAMS.timerMinutes);
+  };
+
   const visibleSliders = SLIDER_CONFIGS.filter((config) => advanced || !config.advancedOnly);
 
   return (
@@ -133,6 +140,10 @@ export function App() {
           </select>
         </label>
       </div>
+
+      <button type="button" className="reset-defaults" onClick={resetDefaults}>
+        Reset to defaults
+      </button>
 
       <p className="safety-hint">
         Keep the device well away from the crib and at a low volume — soft enough that you could
