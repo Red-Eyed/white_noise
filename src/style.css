@@ -184,6 +184,14 @@ select:focus-visible {
   font-size: 0.75rem;
 }
 
+.evidence__body a {
+  color: var(--accent);
+}
+
+.evidence__body a:hover {
+  text-decoration: none;
+}
+
 /* Simple ↔ Pro mode */
 .mode-toggle {
   display: flex;

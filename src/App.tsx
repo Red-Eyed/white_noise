@@ -154,12 +154,16 @@ export function App() {
         <summary>Why these settings</summary>
         <div className="evidence__body">
           <p>
-            <strong>Color.</strong> Broadband white noise is the only spectrum with an infant trial
-            behind it: 80% of newborns fell asleep within five minutes with white noise versus 25%
-            without (Spencer et al., <em>Arch Dis Child</em>). Neonates respond most strongly to
-            broad-spectrum sound (fMEG study). Pink noise's "deeper sleep" evidence is adult-only,
-            and brown noise is not well studied in infants — so the recommended band is White–Pink,
-            and Brown is offered but flagged as less studied.
+            <strong>Color.</strong> Broadband white noise is the classic infant trial: 80% of
+            newborns fell asleep within five minutes with white noise versus 25% without
+            (Spencer et al. 1990, <em>Arch Dis Child</em>). Neonates respond most strongly to
+            broad-spectrum sound (fMEG study), and a 2025 fNIRS study found regular white-noise
+            exposure during sleep measurably changes infant brain connectivity. A 2025 systematic
+            review across maternal and neonatal care likewise found consistent benefits for
+            sleep onset, stress, and pain. Pink noise's "deeper sleep" evidence is adult-only — it
+            strengthens slow-wave sleep and next-day memory in older adults (Papalambros et al.
+            2017) — and brown noise is not well studied in infants. So the recommended band is
+            White–Pink, and Brown is offered but flagged as less studied.
           </p>
           <p>
             <strong>Volume.</strong> The AAP found some infant sound machines exceed 85 dB — the
@@ -169,16 +173,57 @@ export function App() {
             from the crib.
           </p>
           <p>
-            <strong>Consistency.</strong> The evidence favours consistency over any particular color,
-            so your settings are saved and restored automatically each session.
+            <strong>Consistency.</strong> A consistent bedtime routine — not any particular
+            color — is what's linked to earlier sleep onset, fewer night wakings, and longer
+            sleep duration in infants (Mindell et al.), so your settings are saved and restored
+            automatically each session.
           </p>
           <p>
             <strong>Advanced controls.</strong> The Advanced panel (EQ, layer mix, modulation, presets) is for
             exploring — the science above still points to a quiet, steady, White–Pink sound.
           </p>
           <p className="evidence__sources">
-            Sources: PubMed 2405784 · PMC3876038 · Nature Sci Rep s41598-025-14774-7 · AAP via
-            Consumer Reports.
+            Sources:{" "}
+            <a href="https://pubmed.ncbi.nlm.nih.gov/2405784/" target="_blank" rel="noopener noreferrer">
+              Spencer 1990
+            </a>{" "}
+            ·{" "}
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3876038/" target="_blank" rel="noopener noreferrer">
+              fMEG study
+            </a>{" "}
+            ·{" "}
+            <a href="https://www.nature.com/articles/s41598-025-14774-7" target="_blank" rel="noopener noreferrer">
+              fNIRS study
+            </a>{" "}
+            ·{" "}
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12818530/" target="_blank" rel="noopener noreferrer">
+              2025 review
+            </a>{" "}
+            ·{" "}
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5340797/" target="_blank" rel="noopener noreferrer">
+              Papalambros 2017
+            </a>{" "}
+            ·{" "}
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4402657/" target="_blank" rel="noopener noreferrer">
+              Mindell bedtime routine
+            </a>{" "}
+            ·{" "}
+            <a
+              href="https://publications.aap.org/pediatrics/article/133/4/677/32749/Infant-Sleep-Machines-and-Hazardous-Sound-Pressure"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              AAP
+            </a>{" "}
+            via{" "}
+            <a
+              href="https://www.consumerreports.org/babies-kids/bassinets/white-noise-for-babies-its-confusing-a3417127276/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Consumer Reports
+            </a>
+            .
           </p>
         </div>
       </details>
