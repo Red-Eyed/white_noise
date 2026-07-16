@@ -212,3 +212,12 @@ select:focus-visible {
 .app > .control {
   width: 100%;
 }
+
+/* App version — a quiet footer tag, useful now that the PWA auto-updates. */
+.app-version {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--fg-dim);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}

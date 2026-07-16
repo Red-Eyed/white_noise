@@ -1,9 +1,18 @@
+import { readFileSync } from "node:fs";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
+// Single source of truth for the app version: package.json. Read at config time
+// (Node) and injected as a compile-time constant so no runtime JSON import bloats
+// the bundle — declared for the app in src/env.d.ts.
+const { version } = JSON.parse(readFileSync(new URL("./package.json", import.meta.url), "utf-8"));
+
 export default defineConfig({
   base: "/white_noise/",
+  define: {
+    __APP_VERSION__: JSON.stringify(version),
+  },
   plugins: [
     react(),
     VitePWA({

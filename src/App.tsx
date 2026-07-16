@@ -171,6 +171,8 @@ export function App() {
           </p>
         </div>
       </details>
+
+      <p className="app-version">v{__APP_VERSION__}</p>
     </main>
   );
 }
